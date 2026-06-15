@@ -1,72 +1,77 @@
-# Algoritmo de Búsqueda Binaria y Pruebas Unitarias
+# Pruebas de Software: Diseño de Experimentos y Cobertura de Código
 
-Este repositorio contiene la implementación en Python del algoritmo de búsqueda binaria y su correspondiente batería de pruebas unitarias, cumpliendo con los requerimientos prácticos de la asignatura.
+Este repositorio contiene la resolución práctica para la **Actividad Autónoma 2** del módulo de Control de Calidad y Mantenimiento de Software.
 
-La búsqueda binaria es un algoritmo eficiente para encontrar la posición de un elemento en una lista ordenada. Su complejidad temporal en el peor de los casos es de $O(\log n)$, lo cual reduce significativamente el número de comparaciones en comparación con una búsqueda lineal tradicional.
-
-## Estructura del Proyecto
-
-*   `busqueda_binaria.py`: Contiene la lógica del algoritmo de búsqueda binaria implementado de manera iterativa.
-*   `test_busqueda_binaria.py`: Define los casos de prueba unitaria utilizando el módulo estándar `unittest` de Python.
-*   `resultado_pruebas.txt`: Archivo de texto que registra la salida oficial de la última ejecución exitosa del conjunto de pruebas.
+Aquí se implementan técnicas de **Diseño de Experimentos (DOE)** mediante combinaciones por pares (Pairwise Testing), **Análisis de Cobertura de Código (Branch Coverage)**, y **Análisis Estático de Código** (detección de anomalías de flujo de datos).
 
 ---
 
-## Prerrequisitos
+## 📋 Contenido del Repositorio
 
-Para ejecutar este código y sus pruebas, únicamente se requiere tener instalado **Python 3.x** en el sistema. No es necesario instalar librerías externas o dependencias de terceros, ya que todo el desarrollo se apoya en la biblioteca estándar de Python.
+1.  **`busqueda_binaria.py`**: Algoritmo de búsqueda binaria desarrollado en la Tarea 1.
+2.  **`test_busqueda_binaria.py`**: Suite de pruebas final que alcanza el **100% de cobertura de decisiones/ramas**.
+3.  **`test_inicial.py`**: Suite de pruebas reducida inicial (cobertura del 89%).
+4.  **`generar_pairwise.py`**: Script en Python utilizando la librería `allpairspy` para generar combinaciones DOE de 5 factores mediante Pairwise.
+5.  **`casos_prueba_pairwise.csv`**: Tabla exportada con las 30 combinaciones óptimas de pruebas para el sistema de reserva de hotel.
+6.  **`busqueda_binaria_anomalo.py`**: Algoritmo modificado con dos anomalías de flujo de datos introducidas intencionadamente (variable no utilizada y variable indefinida/no inicializada).
+7.  **`reporte_analisis_estatico.txt`**: Resultados y diagnóstico generado por la herramienta de análisis estático `pylint`.
+8.  **`ENTREGABLE_AUTONOMO2.md`**: Informe técnico completo detallando la teoría, diseño de experimentos, análisis y conclusiones del trabajo.
 
 ---
 
-## Instrucciones de Uso
+## 🛠️ Requisitos e Instalación
 
-### 1. Ejecución del Algoritmo
-
-Si deseas importar el algoritmo en tu propio script de Python, puedes hacerlo de la siguiente manera:
-
-```python
-from busqueda_binaria import busqueda_binaria
-
-# La lista de entrada DEBE estar ordenada
-numeros = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
-objetivo = 23
-
-resultado = busqueda_binaria(numeros, objetivo)
-
-if resultado != -1:
-    print(f"Elemento encontrado en el índice: {resultado}")
-else:
-    print("El elemento no se encuentra en la lista.")
-```
-
-### 2. Ejecución de las Pruebas Unitarias
-
-Para verificar el correcto funcionamiento del algoritmo en todos los escenarios límite contemplados (búsquedas al inicio, al medio, al final, elementos inexistentes, listas vacías y listas con elementos duplicados), ejecuta el siguiente comando en tu terminal o consola:
+Para ejecutar los scripts y generar los reportes de cobertura en tu máquina local, necesitas tener instalado **Python 3.8+** y las siguientes dependencias:
 
 ```bash
-python test_busqueda_binaria.py
+pip install allpairspy coverage pylint
 ```
 
-La consola mostrará una salida similar a la siguiente indicando el éxito del proceso:
+---
 
-```text
-..........
-----------------------------------------------------------------------
-Ran 10 tests in 0.001s
+## 🚀 Cómo Ejecutar el Proyecto
 
-OK
+### 1. Generación de Casos de Prueba (Pairwise / DOE)
+Para generar las combinaciones óptimas por pares para el sistema de reserva de habitaciones de hotel:
+```bash
+python generar_pairwise.py
 ```
+*Esto generará automáticamente los archivos `casos_prueba_pairwise.csv` y `casos_prueba_pairwise.md`.*
 
-### 3. Generación del Informe de Salida
+---
 
-Para redirigir y guardar los resultados del reporte de pruebas en un archivo local (`resultado_pruebas.txt`), puedes utilizar el redireccionamiento estándar en la línea de comandos de tu sistema operativo:
+### 2. Análisis de Cobertura de Código
 
-*   **En Windows (PowerShell / CMD):**
-    ```cmd
-    python test_busqueda_binaria.py > resultado_pruebas.txt 2>&1
-    ```
+#### Cobertura del primer conjunto de pruebas (Prueba Inicial):
+```bash
+coverage run --branch -m unittest test_inicial.py
+coverage report -m
+```
+*Se observará una cobertura de decisiones del **89%**.*
 
-*   **En Linux / macOS:**
-    ```bash
-    python test_busqueda_binaria.py > resultado_pruebas.txt 2>&1
-    ```
+#### Cobertura del segundo conjunto de pruebas (Prueba Completa):
+```bash
+coverage run --branch -m unittest test_busqueda_binaria.py
+coverage report -m
+```
+*Se alcanzará una cobertura de decisiones del **100%**.*
+
+#### Generar Reporte Visual en HTML:
+```bash
+coverage html
+```
+*Abre el archivo `htmlcov/index.html` en tu navegador para visualizar la cobertura de cada línea del código de forma gráfica.*
+
+---
+
+### 3. Análisis Estático de Código
+Para comprobar cómo la herramienta de análisis estático detecta las anomalías de flujo de datos en el archivo modificado:
+```bash
+pylint busqueda_binaria_anomalo.py
+```
+*El resultado de este diagnóstico se encuentra guardado en `reporte_analisis_estatico.txt`.*
+
+---
+
+## 🧑‍💻 Autores
+*   Desarrollado para la Actividad Autónoma 2.
