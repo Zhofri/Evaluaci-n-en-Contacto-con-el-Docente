@@ -195,22 +195,23 @@ def create_report():
 
     # ================= PAGE 7: PIPELINE DE AUTOMATIZACION =================
     h_p2_s2 = doc.add_heading(level=2)
-    run_p2_s2 = h_p2_s2.add_run("3.2 Sección 2: Pipeline de Testing Integral y Automatizaciones Codeless")
+    run_p2_s2 = h_p2_s2.add_run("3.2 Sección 2: Pipeline de Testing Integral y GitHub Actions (CI)")
     run_p2_s2.font.color.rgb = RGBColor(0x0f, 0x76, 0x6e)
 
     p_p2_s2 = doc.add_paragraph(
-        "El pipeline de integración y automatización de pruebas combina herramientas tradicionales y metodologías sin código (codeless). "
-        "Para las automatizaciones codeless permitidas por el docente, se utilizó un generador asistido por modelos de lenguaje grande (LLM) "
-        "para la estructuración de la suite avanzada.\n\n"
-        "Detalles de la Automatización Codeless:\n"
+        "Para integrar el flujo de desarrollo continuo, se diseñó e implementó un pipeline de Integración Continua (CI) en GitHub Actions "
+        "configurado en el archivo '.github/workflows/test.yml'. Este pipeline se dispara automáticamente en cada evento 'push' a la rama principal (main), "
+        "levantando un entorno de ejecución virtualizado (Ubuntu Latest), configurando Node.js y ejecutando la suite avanzada ('node runAll.js'). "
+        "Si los test fallan, la integración se detiene, garantizando la calidad del código añadido al repositorio.\n\n"
+        "Detalles de la Automatización Codeless de la Suite de Pruebas:\n"
         "  - Herramienta Utilizada: Asistente Antigravity IDE (basado en Gemini 3.5 Flash).\n"
         "  - Prompt Ejecutado para la Generación de Pruebas Avanzadas:\n"
         "    \"Genera un conjunto de pruebas unitarias robustas en JavaScript para el algoritmo de busqueda binaria. Debe validar "
         "casos limite como una lista vacia, un solo elemento, elementos duplicados, y levantar excepciones de tipo TypeError si los "
         "parametros de entrada no coinciden con Array y Number respectivamente, y Error si la lista no se encuentra ordenada de menor a mayor. "
         "Usa exclusivamente sintaxis BDD.\"\n\n"
-        "El pipeline automatizado ejecuta secuencialmente: 1) Análisis de complejidad estática, 2) Pruebas de contrato y tipos, "
-        "3) Ejecución de mutantes e informe de cobertura, 4) Predicción de confiabilidad mediante el módulo de regresión lineal en Node.js."
+        "El pipeline de GitHub Actions integra: 1) Análisis de complejidad estática, 2) Pruebas de contrato y tipos, "
+        "3) Ejecución de mutantes e informe de cobertura, 4) Predicción de confiabilidad mediante el modelo de regresión lineal en Node.js."
     )
     p_p2_s2.paragraph_format.line_spacing = 1.15
 
