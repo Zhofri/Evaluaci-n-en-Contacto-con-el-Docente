@@ -6,12 +6,12 @@
   "type": "commonjs",
   "scripts": {
     "start": "node runAll.js",
-    "test:framework": "node -e \"const { TestRunner } = require('./framework/hybridFramework.js'); const runner = new TestRunner(); const { registrarPruebasAvanzadas } = require('./tests/testAdvanced.js'); registrarPruebasAvanzadas(runner); console.log('=== TEST DEL MINI-FRAMEWORK E HÍBRIDOS ==='); console.log('Pruebas registradas:', runner.passedCount + runner.failedCount);\"",
-    "test:contratos": "node -e \"const { busquedaBinaria } = require('./algoritmo/busquedaBinaria.js'); console.log('=== TEST DE CONTRATOS ==='); console.log('Precondicion exitosa (debe fallar con desordenados):'); try { busquedaBinaria([5, 3, 1], 2); } catch(e) { console.log('✓ Capturado correctamente:', e.message); }\"",
-    "test:propiedades": "node -e \"const { busquedaBinaria } = require('./algoritmo/busquedaBinaria.js'); console.log('=== PROPERTY-BASED ==='); let ok = true; for(let i=0; i<50; i++) { const datos = [i*2, i*2+2, i*2+4]; const res = busquedaBinaria(datos, i*2+2); if (datos[res] !== i*2+2) ok = false; } console.log('✓ Invariante verificado en 50 arreglos dinamicos:', ok ? 'COMPLETO' : 'FALLIDO');\"",
-    "test:mutacion": "node -e \"const { ejecutarPruebasMutantes } = require('./framework/mutation.js'); console.log('=== TEST DE MUTACIÓN ==='); const res = ejecutarPruebasMutantes(); console.log('Mutantes ejecutados:', res.totalMutantes, '| Score:', res.mutationScore.toFixed(2) + '%'); res.detalles.forEach(d => console.log('  *', d.descripcion, '->', d.resultado));\"",
-    "test:metricas": "node -e \"const { calcularComplejidadCiclomatica } = require('./framework/metrics.js'); const fs = require('fs'); const cod = fs.readFileSync('./algoritmo/busquedaBinaria.js', 'utf8'); console.log('=== MÉTRICAS DE COMPLEJIDAD ==='); console.log('Complejidad calculada:', calcularComplejidadCiclomatica(cod));\"",
-    "test:modelo": "node -e \"const { ModeloPrediccionConfiabilidad } = require('./prediction/reliabilityModel.js'); const m = new ModeloPrediccionConfiabilidad(); const train = m.entrenar(); console.log('=== MODELO PREDICTIVO MCO ==='); console.log('Coeficiente R2:', train.r2.toFixed(4)); console.log('Coeficientes del ajuste:', train.coeficientes);\""
+    "test:framework": "node tests/testFrameworkRunner.js",
+    "test:contratos": "node tests/testContratosRunner.js",
+    "test:propiedades": "node tests/testPropiedadesRunner.js",
+    "test:mutacion": "node tests/testMutacionRunner.js",
+    "test:metricas": "node tests/testMetricasRunner.js",
+    "test:modelo": "node tests/testModeloRunner.js"
   },
   "author": "Jonathan Eduardo Tito Ontaneda",
   "license": "ISC"
