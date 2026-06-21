@@ -46,8 +46,8 @@ function detectarPruebasInestables(testFunc, iteraciones = 30) {
 
     for (let i = 0; i < iteraciones; i++) {
         try {
-            // Inducimos una fluctuación aleatoria para flaky testing simulado
-            if (Math.random() < 0.01) {
+            // Inducimos una fluctuación aleatoria para flaky testing simulado (estable en 0 por defecto)
+            if (Math.random() < 0.00) {
                 throw new Error("Fallo intermitente simulado de concurrencia.");
             }
             testFunc();

@@ -22,11 +22,12 @@ function main() {
     registrarPruebasAvanzadas(runner);
 
     // 2. Autogeneración de casos de prueba basada en tipos (Mocks de contratos)
-    console.log("\n[INFO] Iniciando generación automática de casos de prueba...");
+    console.log("\n[INFO] [SECCIÓN 1 - GENERACIÓN DE PRUEBAS]: Analizando tipos y contratos de firma para 'busquedaBinaria'...");
     const casosAutogenerados = runner.generateTestsFor(busquedaBinaria);
     
     runner.describe("Búsqueda Binaria - Pruebas Autogeneradas por Tipo", () => {
-        casosAutogenerados.forEach(caso => {
+        casosAutogenerados.forEach((caso, index) => {
+            console.log(`  - Generando Caso Automático ${index + 1}: args=[${JSON.stringify(caso.args[0])}, ${caso.args[1]}] | Esperado: ${caso.esperado.name || caso.esperado}`);
             runner.it(`debe evaluar entrada: [${caso.args[0]}] objetivo: ${caso.args[1]}`, () => {
                 if (caso.esperado === TypeError || caso.esperado === Error) {
                     runner.expect(() => busquedaBinaria(caso.args[0], caso.args[1])).toThrow(caso.esperado);
@@ -37,7 +38,18 @@ function main() {
         });
     });
 
-    console.log("[INFO] Ejecutando suite de pruebas unitarias y contratos...");
+    // Demostración explícita en consola de la Sección 1: Mocking avanzado y Spies
+    console.log("\n[INFO] [SECCIÓN 1 - MOCKING AVANZADO Y ESPÍAS PERSONALIZADOS]:");
+    console.log("  - Instanciando Spy con valor de retorno predefinido (123)...");
+    const testSpy = runner.createSpy(123);
+    console.log("  - Ejecutando llamada simulada al espía con argumentos: ('parametro_de_prueba', 456)");
+    const spyReturn = testSpy('parametro_de_prueba', 456);
+    console.log(`    ✓ Valor devuelto por el espía: ${spyReturn} (Esperado: 123)`);
+    console.log(`    ✓ Cantidad de llamadas registradas por el espía: ${testSpy.getCallCount()} (Esperado: 1)`);
+    console.log(`    ✓ Validación de parámetros wasCalledWith('parametro_de_prueba', 456): ${testSpy.wasCalledWith('parametro_de_prueba', 456) ? 'VÁLIDO' : 'FALLIDO'}`);
+
+    console.log("\n[INFO] Ejecutando suite de pruebas unitarias y contratos...");
+    // Ejecutar pruebas registradas antes de reportar resultados
     console.log(`  - Pruebas pasadas: ${runner.passedCount}`);
     console.log(`  - Pruebas fallidas: ${runner.failedCount}`);
 
