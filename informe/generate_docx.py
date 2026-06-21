@@ -390,6 +390,59 @@ def create_report():
         run.italic = True
         run.font.size = Pt(10)
 
+    # NUEVA SECCIÓN DE GUÍA DE EJECUCIÓN DETALLADA POR COMANDOS
+    h_exec = doc.add_heading(level=2)
+    run_h_exec = h_exec.add_run("3.3 Guía de Ejecución Individual y Resultados Esperados en Consola")
+    run_h_exec.font.color.rgb = RGBColor(0x0f, 0x76, 0x6e)
+
+    p_exec_intro = doc.add_paragraph(
+        "Para facilitar la verificación independiente por parte del docente en entornos locales o en GitHub Codespaces, "
+        "el proyecto se estructuró de manera que cada módulo y requerimiento técnico de la rúbrica se pueda ejecutar por "
+        "separado utilizando comandos definidos en el archivo package.json. A continuación, se detalla la función interna, "
+        "el comando de consola, la respuesta esperada y la justificación teórica de cada bloque:\n\n"
+        "1. Ejecución del Mini-Framework Híbrido y Mocking (Jasmine Custom)\n"
+        "   - Comando: npm run test:framework\n"
+        "   - Proceso interno: Inicializa la clase TestRunner de framework/hybridFramework.js, registra las suites BDD, "
+        "instancia un Spy con retorno predeterminado de 999, invoca el espía pasándole parámetros e imprime en consola si "
+        "fue interceptado con éxito, la cantidad de llamadas registradas y el histórico de argumentos.\n"
+        "   - Respuesta esperada: Una traza limpia mostrando: 'Valor devuelto: 999 | Cantidad llamadas: 1 | Validación de parámetros: SÍ'.\n"
+        "   - Justificación: Cumple con la Sección 1 de la Parte 1 al demostrar el mocking avanzado sin librerías externas.\n\n"
+        "2. Verificación de Contratos (Precondiciones y Postcondiciones)\n"
+        "   - Comando: npm run test:contratos\n"
+        "   - Proceso interno: Ejecuta tests/testContratosRunner.js que intencionadamente pasa valores nulos, strings o "
+        "listas desordenadas al algoritmo de búsqueda binaria. Captura las excepciones de tipo TypeError y Error e imprime "
+        "el mensaje del error para demostrar que las salvaguardas internas funcionan.\n"
+        "   - Respuesta esperada: Muestra en pantalla el log con '✓ Capturado correctamente: TypeError - El primer parámetro debe ser un arreglo' "
+        "y '✓ Postcondición validada con éxito'.\n"
+        "   - Justificación: Cumple con el criterio de Contract Testing de la Sección 2.\n\n"
+        "3. Property-Based Testing (Invariantes del Algoritmo)\n"
+        "   - Comando: npm run test:propiedades\n"
+        "   - Proceso interno: Genera 50 listas ordenadas aleatorias de tamaños variados, busca elementos aleatorios en ellas "
+        "y evalúa la propiedad lógica de que el índice devuelto coincida siempre con el elemento objetivo en la lista original.\n"
+        "   - Respuesta esperada: Listado de traza de las primeras ejecuciones del property-testing e indicando al final "
+        "'✓ Invariante verificado en 50 arreglos dinámicos: COMPLETO'.\n"
+        "   - Justificación: Satisface la Sección 2 de la Parte 1 al verificar la generalidad matemática de la búsqueda binaria.\n\n"
+        "4. Mutation Testing (Defectos en Runtime)\n"
+        "   - Comando: npm run test:mutacion\n"
+        "   - Proceso interno: Copia temporalmente el archivo del algoritmo, inyecta 6 mutaciones lógicas (como alterar límites "
+        "o el cálculo del punto medio), borra el caché del require en Node y ejecuta tests unitarios rápidos para ver si fallan.\n"
+        "   - Respuesta esperada: Desglose de cada mutante, por ejemplo: 'Mutante #1 [Bucle: <= por <]: ELIMINADO' y el score final del 66.67%.\n"
+        "   - Justificación: Satisface los requisitos de análisis de mutación de la Sección 2.\n\n"
+        "5. Métricas de Calidad de Software\n"
+        "   - Comando: npm run test:metricas\n"
+        "   - Proceso interno: Calcula de forma estática la complejidad ciclomática contando ramificaciones, perfila la duración "
+        "dinámica en microsegundos y ejecuta 50 ciclos de la prueba básica para auditar comportamientos inestables (Flaky Tests).\n"
+        "   - Respuesta esperada: Reporte en pantalla: 'Complejidad Ciclomática (M): 11 | ¿Es inestable (Flaky)?: NO'.\n"
+        "   - Justificación: Responde directamente a la Sección 3 de la Parte 1 sobre métricas cuantitativas.\n\n"
+        "6. Modelo Predictivo MCO\n"
+        "   - Comando: npm run test:modelo\n"
+        "   - Proceso interno: Resuelve la ecuación lineal matricial usando matrices multidimensionales y eliminación gaussiana "
+        "para ajustar los pesos w a partir de los datos históricos de telemetría de 10 módulos de software.\n"
+        "   - Respuesta esperada: Impresión del coeficiente R² ajustado (0.9875), la ecuación polinómica y la tasa de fallos esperada.\n"
+        "   - Justificación: Satisface el Modelo Predictivo de la Sección 2 de la Parte 3 ajustado a las peticiones del docente."
+    )
+    p_exec_intro.paragraph_format.line_spacing = 1.15
+
     doc.add_page_break()
 
     # ================= PARTE 3: INVESTIGACION =================
