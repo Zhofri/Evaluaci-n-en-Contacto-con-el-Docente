@@ -1,16 +1,4 @@
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.pytest_cache/
-.venv/
-venv/
-ENV/
-*.log
 node_modules/
 .DS_Store
 ~$*
-.coverage
-htmlcov/
-*.docx
-*.py
+*.log
