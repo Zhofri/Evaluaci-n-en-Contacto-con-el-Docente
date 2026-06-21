@@ -53,7 +53,7 @@
     },
     "metricas": {
         "complejidad_ciclomatica": 11,
-        "tiempo_ejecucion_ms": 0.2974000000000032,
+        "tiempo_ejecucion_ms": 0.17830000000000013,
         "flaky_test_detectado": false,
         "cobertura_porcentaje": 100,
         "relacion_cobertura_defectos": 50
