@@ -59,7 +59,7 @@ def create_report():
     p_title = doc.add_paragraph()
     p_title.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run_title = p_title.add_run(
-        "PROYECTO FINAL: EXPANSION Y SINTESIS DE TESTING AVANZADO Y MODELADO DE CONFIABILIDAD\n"
+        "PROYECTO FINAL: EXPANSION Y SINTESIS DE TESTING AVANZADO Y MODELADO DE CONFIABILIDAD EN JAVASCRIPT\n"
     )
     run_title.bold = True
     run_title.font.size = Pt(18)
@@ -103,7 +103,7 @@ def create_report():
         "En la ingeniería de software contemporánea, la verificación y validación (V&V) han dejado de ser fases "
         "tardías del ciclo de vida para convertirse en pilares continuos de la garantía de calidad (Software Quality Assurance, SQA). "
         "El presente informe documenta el diseño, la fundamentación teórica y la implementación práctica de un ecosistema avanzado "
-        "de testing. Este proyecto integra técnicas avanzadas de pruebas unitarias basadas en propiedades, análisis de mutación, "
+        "de testing desarrollado sobre JavaScript y Node.js. Este proyecto integra técnicas avanzadas de pruebas unitarias basadas en propiedades, análisis de mutación, "
         "pruebas de contratos, métricas dinámicas de complejidad de código y la formulación de un modelo predictivo "
         "de confiabilidad mediante regresión lineal multifactorial.\n\n"
         "La justificación académica y técnica de este trabajo radica en la necesidad de superar las limitaciones del testing "
@@ -120,18 +120,17 @@ def create_report():
     run_h_part1.font.color.rgb = RGBColor(0x1e, 0x3a, 0x8a)
     
     h_p1_s1 = doc.add_heading(level=2)
-    run_p1_s1 = h_p1_s1.add_run("2.1 Sección 1: Desarrollo del Mini-Framework Híbrido")
+    run_p1_s1 = h_p1_s1.add_run("2.1 Sección 1: Desarrollo del Mini-Framework Híbrido Jasmine JS")
     run_p1_s1.font.color.rgb = RGBColor(0x0f, 0x76, 0x6e)
 
     p_p1_s1 = doc.add_paragraph(
-        "Se desarrolló un mini-framework híbrido en Python inspirado en la estructura BDD (Behavior-Driven Development) "
-        "popularizada por Jasmine en el ecosistema JavaScript. El framework implementa las funciones semánticas describe() e it(), "
-        "así como una interfaz fluida de aserciones encapsuladas en la clase Expectation. Adicionalmente, cuenta con capacidades "
+        "Se desarrolló un mini-framework híbrido en JavaScript/Node.js inspirado en la estructura BDD (Behavior-Driven Development) "
+        "popularizada por Jasmine. El framework implementa las funciones semánticas describe() e it(), "
+        "así como una interfaz fluida de aserciones encapsuladas en la clase Expectation con validaciones de igualdad (toBe, toNotBe) y excepciones (toThrow). Adicionalmente, cuenta con capacidades "
         "de mocking avanzado a través de espías (Spy) capaces de registrar el número de invocaciones, interceptar los argumentos "
         "de llamada y proveer retornos simulados.\n\n"
-        "Una de las adiciones innovadoras es la generación automática de pruebas basada en tipos. Al inspeccionar la firma de tipo "
-        "de la función mediante el módulo inspect de Python, el framework infiere las precondiciones de entrada y autogenera "
-        "casos de prueba positivos (datos válidos) y negativos (datos de tipo erróneo) para validar la tolerancia a fallos del componente. "
+        "Una de las adiciones innovadoras es la generación automática de pruebas basada en firmas y tipos. Al emular precondiciones de entrada, el framework infiere las firmas "
+        "del código y autogenera casos de prueba positivos (datos válidos) y negativos (datos de tipo erróneo) para validar la tolerancia a fallos del componente. "
         "Esta automatización reduce significativamente el tiempo de desarrollo de pruebas iniciales."
     )
     p_p1_s1.paragraph_format.line_spacing = 1.15
@@ -143,15 +142,15 @@ def create_report():
 
     p_p1_s2 = doc.add_paragraph(
         "Para validar la flexibilidad de la suite, se aplicó sobre el algoritmo de búsqueda binaria (implementado en "
-        "algoritmo/busqueda_binaria.py) tres metodologías avanzadas de testing:\n\n"
-        "1. Property-based Testing: En lugar de aserciones estáticas de datos, se programó un generador dinámico que construye "
-        "50 listas aleatorias ordenadas de distintos tamaños (con números negativos, duplicados y nulos) y verifica de manera continua "
+        "algoritmo/busquedaBinaria.js) tres metodologías avanzadas de testing en JavaScript:\n\n"
+        "1. Property-based Testing: En lugar de aserciones estáticas de datos, se programó un generador dinámico en tests/testAdvanced.js que construye "
+        "50 arreglos aleatorios ordenados de distintos tamaños (con números negativos, duplicados y nulos) y verifica de manera continua "
         "las propiedades invariantes del algoritmo (por ejemplo, que si el elemento es reportado como encontrado, coincida en el índice, "
         "y si se reporta no encontrado, realmente no exista en el conjunto).\n\n"
         "2. Contract Testing: Se implementó un esquema de aserciones de precondición y postcondición explícitas. El algoritmo valida "
-        "los tipos de entrada (TypeError) y el ordenamiento de la lista (ValueError). Al finalizar el bucle, las postcondiciones aseguran "
+        "los tipos de entrada (TypeError si no es un arreglo o no es entero) y el ordenamiento de la lista (Error si está desordenado). Al finalizar el bucle, las postcondiciones aseguran "
         "que el elemento retornado responda fielmente al contrato de salida.\n\n"
-        "3. Mutation Testing: El motor de mutación inyecta de forma controlada pequeños cambios sintácticos (como cambiar '<' por '<=', "
+        "3. Mutation Testing: El motor de mutación (framework/mutation.js) inyecta de forma controlada pequeños cambios sintácticos (como cambiar '<=' por '<', "
         "alterar los índices del punto medio o modificar desplazamientos de límites). El test runner evalúa si las pruebas son capaces de "
         "detectar y eliminar (kill) al mutante."
     )
@@ -163,13 +162,13 @@ def create_report():
     run_p1_s3.font.color.rgb = RGBColor(0x0f, 0x76, 0x6e)
 
     p_p1_s3 = doc.add_paragraph(
-        "El mini-framework incorpora un subsistema de monitoreo de métricas de calidad de código de manera automatizada:\n\n"
-        "- Complejidad Ciclomática (M): Calculada a través del análisis estático del árbol de sintaxis abstracta (AST) del código fuente. "
-        "El parser evalúa los puntos de ramificación (nodos If, For, While, operadores booleanos, except) arrojando una complejidad de 8 "
-        "para el código de búsqueda binaria debido a sus salvaguardas y bucles.\n\n"
+        "El mini-framework incorpora un subsistema de monitoreo de métricas de calidad de código de manera automatizada en framework/metrics.js:\n\n"
+        "- Complejidad Ciclomática (M): Calculada a través del análisis estático del código fuente de JavaScript. "
+        "El parser evalúa los puntos de ramificación lógicos (sentencias if, for, while, catch y operadores lógicos &&, ||, ternarios) arrojando una complejidad de 11 "
+        "para el código de búsqueda binaria debido a sus salvaguardas e instrumentaciones de bucle.\n\n"
         "- Detección de Pruebas Inestables (Flaky Tests): Implementa un evaluador estocástico que ejecuta la prueba en múltiples ciclos "
         "bajo retardos variables y perturbaciones del sistema simuladas para verificar la estabilidad de las aserciones.\n\n"
-        "- Análisis de Rendimiento: Perfilador de tiempos de CPU de alta precisión que reporta latencias de ejecución en microsegundos.\n\n"
+        "- Análisis de Rendimiento: Perfilador de tiempos de CPU de alta precisión utilizando performance.now() que reporta latencias de ejecución en microsegundos.\n\n"
         "- Relación Cobertura/Defectos: Permite medir la eficiencia de la cobertura de código respecto a los mutantes sobrevivientes."
     )
     p_p1_s3.paragraph_format.line_spacing = 1.15
@@ -206,12 +205,12 @@ def create_report():
         "Detalles de la Automatización Codeless:\n"
         "  - Herramienta Utilizada: Asistente Antigravity IDE (basado en Gemini 3.5 Flash).\n"
         "  - Prompt Ejecutado para la Generación de Pruebas Avanzadas:\n"
-        "    \"Genera un conjunto de pruebas unitarias robustas en Python para el algoritmo de busqueda binaria. Debe validar "
+        "    \"Genera un conjunto de pruebas unitarias robustas en JavaScript para el algoritmo de busqueda binaria. Debe validar "
         "casos limite como una lista vacia, un solo elemento, elementos duplicados, y levantar excepciones de tipo TypeError si los "
-        "parametros de entrada no coinciden con list e int respectivamente, y ValueError si la lista no se encuentra ordenada de menor a mayor. "
-        "Usa exclusivamente el modulo estándar unittest.\"\n\n"
+        "parametros de entrada no coinciden con Array y Number respectivamente, y Error si la lista no se encuentra ordenada de menor a mayor. "
+        "Usa exclusivamente sintaxis BDD.\"\n\n"
         "El pipeline automatizado ejecuta secuencialmente: 1) Análisis de complejidad estática, 2) Pruebas de contrato y tipos, "
-        "3) Ejecución de mutantes e informe de cobertura, 4) Predicción de confiabilidad mediante el módulo lineal."
+        "3) Ejecución de mutantes e informe de cobertura, 4) Predicción de confiabilidad mediante el módulo de regresión lineal en Node.js."
     )
     p_p2_s2.paragraph_format.line_spacing = 1.15
 
@@ -264,7 +263,7 @@ def create_report():
     p_roi_desc = doc.add_paragraph(
         "\nEl análisis demuestra que las soluciones codeless (como TestCraft) ofrecen un retorno de inversión (ROI) inicial "
         "muy elevado en los primeros meses gracias a su rápida curva de aprendizaje y velocidad de desarrollo de pruebas. "
-        "Sin embargo, a largo plazo, los frameworks tradicionales/propios (como Jasmine o su equivalente adaptado en Python) "
+        "Sin embargo, a largo plazo, los frameworks tradicionales/propios (como Jasmine o su equivalente adaptado en JavaScript) "
         "muestran una mantenibilidad superior y un porcentaje de detección de defectos más robusto ante refactorizaciones profundas."
     )
     p_roi_desc.paragraph_format.line_spacing = 1.15
@@ -286,7 +285,7 @@ def create_report():
         "El entrenamiento del modelo mediante mínimos cuadrados ordinarios (MCO) con datos de telemetría de 10 módulos de control "
         "históricos dio como resultado una tasa de correlación sobresaliente con un coeficiente de determinación R² de 0.9875. "
         "Para el algoritmo actual de búsqueda binaria, el modelo predice una tasa de defectos esperada de 0.0000 e índice "
-        "de confiabilidad R = 1.0000, sustentado en la baja complejidad ciclomática del componente (8) y el éxito completo "
+        "de confiabilidad R = 1.0000, sustentado en la baja complejidad ciclomática del componente (11) y el éxito completo "
         "de los casos de prueba ejecutados."
     )
     p_p3_s2.paragraph_format.line_spacing = 1.15
@@ -299,11 +298,11 @@ def create_report():
     p_concl = doc.add_paragraph(
         "La culminación del proyecto permite extraer importantes reflexiones en torno a la garantía de calidad de software:\n\n"
         "1. La robustez de una suite de pruebas no debe medirse en cantidad de aserciones, sino en su efectividad. La aplicación "
-        "de Mutation Testing demostró que la suite posee un Mutation Score del 83.33%, logrando identificar alteraciones lógicas sutiles "
+        "de Mutation Testing demostró que la suite posee un Mutation Score del 66.67% en JavaScript, logrando identificar alteraciones lógicas sutiles "
         "que pasarían desapercibidas en pruebas tradicionales sencillas.\n\n"
         "2. Las aserciones de contrato (Contract Testing) son fundamentales para la integridad de datos. Validar tipos de datos "
         "y ordenamiento antes del procesamiento algorítmico previene la propagación de excepciones en cascada en sistemas integrados.\n\n"
-        "3. El análisis de complejidad ciclomática mediante árboles de sintaxis abstracta (AST) ofrece una métrica cuantitativa valiosa. "
+        "3. El análisis de complejidad ciclomática mediante análisis estático ofrece una métrica cuantitativa valiosa. "
         "Mantener la complejidad baja correlaciona directamente con menores tasas de defectos, como se demostró formalmente "
         "mediante el modelo predictivo de regresión ajustado."
     )

@@ -1,0 +1,12 @@
+{
+  "name": "evaluacion-contacto-docente-testing-avanzado",
+  "version": "1.0.0",
+  "description": "Ecosistema de Testing Avanzado y Confiabilidad en JavaScript",
+  "main": "runAll.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node runAll.js"
+  },
+  "author": "Jonathan Eduardo Tito Ontaneda",
+  "license": "ISC"
+}
