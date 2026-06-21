@@ -20,16 +20,12 @@ Este repositorio contiene el desarrollo del proyecto final de la asignatura, el 
     *   `index.html`: Dashboard web interactivo diseñado con estética moderna (Glassmorphic Dark Mode) para la visualización de resultados y curvas predictivas.
     *   `style.css`: Estilización responsiva y animaciones del dashboard.
     *   `data.json`: Archivo de datos generado dinámicamente que alimenta el dashboard.
-*   `informe/`:
-    *   `informe_final.docx`: Informe de salida oficial formateado bajo normas APA 7 y estructurado con tablas financieras y referencias bibliográficas académicas reales de 12 páginas.
 
 ---
 
 ## Requisitos de Instalación
 
 El proyecto se ejecuta sobre **Node.js** (v18 o superior). No es necesario instalar librerías externas o dependencias para la lógica central, ya que todo está desarrollado en JavaScript nativo.
-
-Para generar o recompilar el reporte Word (`informe/informe_final.docx`), se requiere Python con `python-docx` (el documento ya se encuentra generado y compilado en el repositorio por comodidad).
 
 ---
 
