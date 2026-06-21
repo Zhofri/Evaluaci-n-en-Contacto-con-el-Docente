@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Expansión de Testing Avanzado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="dashboard-container">
+        
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-logo">
+                <span class="logo-icon">🎯</span>
+                <div class="logo-text">
+                    <h1>METRICS<span>SENSE</span></h1>
+                    <p>Plataforma de Diagnóstico y Confiabilidad de Software</p>
+                </div>
+            </div>
+            <div class="header-meta">
+                <span class="badge status-ok">Estado: Óptimo</span>
+                <span class="meta-date" id="current-date">Fecha: Junio 2026</span>
+            </div>
+        </header>
+
+        <!-- Main Stats Grid -->
+        <section class="stats-grid">
+            <!-- Card 1: Pruebas Ejecutadas -->
+            <div class="stat-card glass-panel">
+                <div class="card-icon blue">✓</div>
+                <div class="card-data">
+                    <h3 id="stat-tests">0 / 0</h3>
+                    <p>Pruebas Pasadas</p>
+                </div>
+            </div>
+            <!-- Card 2: Cobertura -->
+            <div class="stat-card glass-panel">
+                <div class="card-icon emerald">📊</div>
+                <div class="card-data">
+                    <h3 id="stat-coverage">100.0%</h3>
+                    <p>Cobertura de Código</p>
+                </div>
+            </div>
+            <!-- Card 3: Mutation Score -->
+            <div class="stat-card glass-panel">
+                <div class="card-icon violet">☣</div>
+                <div class="card-data">
+                    <h3 id="stat-mutation">0.0%</h3>
+                    <p>Mutation Score</p>
+                </div>
+            </div>
+            <!-- Card 4: Confiabilidad -->
+            <div class="stat-card glass-panel">
+                <div class="card-icon gold">🛡</div>
+                <div class="card-data">
+                    <h3 id="stat-reliability">0.00%</h3>
+                    <p>Índice de Confiabilidad (R)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="charts-section">
+            <!-- Chart 1: Predicción de Confiabilidad -->
+            <div class="chart-card glass-panel large-chart">
+                <div class="chart-header">
+                    <h2>Modelo de Predicción de Confiabilidad (MCO)</h2>
+                    <p>Regresión Lineal: Cobertura, Complejidad Ciclomática y Patrones de Uso</p>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="reliabilityChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: Mutación y Métricas -->
+            <div class="chart-card glass-panel">
+                <div class="chart-header">
+                    <h2>Análisis de Mutantes Inyectados</h2>
+                    <p>Estado final de robustez de las aserciones</p>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="mutationChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Detail Tables -->
+        <section class="detail-section">
+            <!-- Tabla de Pruebas -->
+            <div class="detail-card glass-panel">
+                <div class="card-header-flex">
+                    <h2>Resultados de Pruebas Unitarias e Integración</h2>
+                    <span class="badge badge-outline" id="total-tests-badge">0 Pruebas</span>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre de la Prueba</th>
+                                <th>Estado</th>
+                                <th>Detalle / Error</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tests-table-body">
+                            <tr>
+                                <td colspan="3" class="loading-text">Cargando datos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel de Métricas de Código -->
+            <div class="detail-card glass-panel">
+                <h2>Métricas y Diagnóstico de Complejidad</h2>
+                <div class="metrics-list">
+                    <div class="metric-item">
+                        <span class="metric-name">Complejidad Ciclomática (M)</span>
+                        <span class="metric-val highlight" id="metric-complexity">0</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-name">Tiempo de Ejecución Promedio (Búsqueda)</span>
+                        <span class="metric-val" id="metric-time">0.00 ms</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-name">Estabilidad de Pruebas (Flaky Detector)</span>
+                        <span class="metric-val status-ok-text" id="metric-flaky">Estable</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-name">Relación Cobertura/Defectos</span>
+                        <span class="metric-val" id="metric-cov-def">0.0</span>
+                    </div>
+                </div>
+
+                <!-- Detalle del Modelo Predictivo -->
+                <div class="predictive-model-panel">
+                    <h3>Fórmula de Regresión Ajustada</h3>
+                    <div class="formula-box">
+                        <code id="regression-formula">y = w₀ + w₁·X₁ + w₂·X₂ + w₃·X₃</code>
+                    </div>
+                    <p class="model-meta">Coeficiente de Determinación R²: <strong id="model-r2">0.0000</strong></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Script de procesamiento -->
+    <script>
+        // Cargar datos dinámicamente desde el archivo exportado
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                // Actualizar contadores superiores
+                document.getElementById('stat-tests').innerText = `${data.resumen_pruebas.pasadas} / ${data.resumen_pruebas.total}`;
+                document.getElementById('stat-mutation').innerText = `${data.mutacion.mutation_score.toFixed(1)}%`;
+                
+                const confPercent = (data.prediccion.confiabilidad_calculada * 100).toFixed(2);
+                document.getElementById('stat-reliability').innerText = `${confPercent}%`;
+                
+                // Actualizar métricas detalladas
+                document.getElementById('metric-complexity').innerText = data.metricas.complejidad_ciclomatica;
+                document.getElementById('metric-time').innerText = `${data.metricas.tiempo_ejecucion_ms.toFixed(4)} ms`;
+                document.getElementById('metric-flaky').innerText = data.metricas.flaky_test_detectado ? '⚠️ Inestable (Flaky)' : '✓ Estable';
+                if(data.metricas.flaky_test_detectado) {
+                    document.getElementById('metric-flaky').className = 'metric-val status-error-text';
+                }
+                document.getElementById('metric-cov-def').innerText = data.metricas.relacion_cobertura_defectos.toFixed(2);
+                
+                // badge de pruebas
+                document.getElementById('total-tests-badge').innerText = `${data.resumen_pruebas.total} Pruebas Ejecutadas`;
+                
+                // Ecuación de regresión
+                const w = data.prediccion.coeficientes;
+                const r2Val = data.prediccion.r2;
+                document.getElementById('regression-formula').innerText = 
+                    `Tasa Defectos = (${w.intercept.toFixed(4)}) + (${w.w_complejidad.toFixed(4)} * Ciclomática) + (${w.w_ejecuciones.toFixed(4)} * Ejecuciones) + (${w.w_cobertura.toFixed(4)} * Cobertura)`;
+                document.getElementById('model-r2').innerText = r2Val.toFixed(4);
+                
+                // Llenar tabla de pruebas
+                const tableBody = document.getElementById('tests-table-body');
+                tableBody.innerHTML = '';
+                data.resumen_pruebas.detalles.forEach(test => {
+                    const tr = document.createElement('tr');
+                    const tdName = document.createElement('td');
+                    tdName.innerText = test.test;
+                    
+                    const tdStatus = document.createElement('td');
+                    const spanStatus = document.createElement('span');
+                    spanStatus.className = test.status === 'PASS' ? 'badge status-ok' : 'badge status-error';
+                    spanStatus.innerText = test.status === 'PASS' ? 'Exitoso' : 'Fallo';
+                    tdStatus.appendChild(spanStatus);
+                    
+                    const tdDetail = document.createElement('td');
+                    tdDetail.innerText = test.error ? test.error : 'Ejecución exitosa';
+                    tdDetail.className = test.error ? 'error-text' : 'success-text';
+                    
+                    tr.appendChild(tdName);
+                    tr.appendChild(tdStatus);
+                    tr.appendChild(tdDetail);
+                    tableBody.appendChild(tr);
+                });
+
+                // Gráfico 1: Modelo de Regresión
+                // Generar curva predictiva basada en complejidad ciclomática de 1 a 30
+                const complejidadesX = Array.from({length: 30}, (_, i) => i + 1);
+                const tasasDefectosY = complejidadesX.map(c => {
+                    const t = w.intercept + (w.w_complejidad * c) + (w.w_ejecuciones * data.resumen_pruebas.total) + (w.w_cobertura * 1.0);
+                    return Math.max(0.0, Math.min(1.0, t));
+                });
+                
+                const ctxRel = document.getElementById('reliabilityChart').getContext('2d');
+                new Chart(ctxRel, {
+                    type: 'line',
+                    data: {
+                        labels: complejidadesX,
+                        datasets: [
+                            {
+                                label: 'Tasa de Defectos Esperada (Modelo Regresión)',
+                                data: tasasDefectosY,
+                                borderColor: 'rgba(239, 68, 68, 0.9)',
+                                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                borderDash: [5, 5],
+                                fill: true,
+                                tension: 0.1
+                            },
+                            {
+                                label: 'Punto del Algoritmo Actual (Búsqueda Binaria)',
+                                data: [{x: data.metricas.complejidad_ciclomatica, y: data.prediccion.tasa_defectos_predicha}],
+                                borderColor: '#eab308',
+                                backgroundColor: '#eab308',
+                                pointRadius: 8,
+                                pointHoverRadius: 10,
+                                showLine: false
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: { display: true, text: 'Complejidad Ciclomática del Código', color: '#94a3b8' },
+                                ticks: { color: '#94a3b8' },
+                                grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                            },
+                            y: {
+                                min: 0.0,
+                                max: 0.4,
+                                title: { display: true, text: 'Tasa de Defectos Predicha', color: '#94a3b8' },
+                                ticks: { color: '#94a3b8' },
+                                grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                            }
+                        },
+                        plugins: {
+                            legend: { labels: { color: '#e2e8f0' } }
+                        }
+                    }
+                });
+
+                // Gráfico 2: Mutación (Dona)
+                const ctxMut = document.getElementById('mutationChart').getContext('2d');
+                new Chart(ctxMut, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Killed (Eliminados)', 'Survived (Sobrevivieron)'],
+                        datasets: [{
+                            data: [data.mutacion.mutantes_eliminados, data.mutacion.total_mutantes - data.mutacion.mutantes_eliminados],
+                            backgroundColor: ['rgba(16, 185, 129, 0.85)', 'rgba(239, 68, 68, 0.85)'],
+                            borderColor: ['#10b981', '#ef4444'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#e2e8f0' }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(err => {
+                console.error("Error al cargar data.json:", err);
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{
+    "resumen_pruebas": {
+        "total": 9,
+        "pasadas": 9,
+        "fallidas": 0,
+        "detalles": [
+            {
+                "test": "Búsqueda Binaria - Pruebas de Contratos -> debe validar precondicion de tipos de parametros (TypeError)",
+                "status": "PASS",
+                "error": null
+            },
+            {
+                "test": "Búsqueda Binaria - Pruebas de Contratos -> debe validar precondicion de ordenamiento de lista (ValueError)",
+                "status": "PASS",
+                "error": null
+            },
+            {
+                "test": "Búsqueda Binaria - Pruebas de Contratos -> debe validar postcondiciones de exito en busquedas",
+                "status": "PASS",
+                "error": null
+            },
+            {
+                "test": "Búsqueda Binaria - Property-based Testing -> debe verificar invariantes con datos autogenerados",
+                "status": "PASS",
+                "error": null
+            },
+            {
+                "test": "Búsqueda Binaria - Mocks y Espías -> debe registrar correctamente llamadas e interactuar con spies",
+                "status": "PASS",
+                "error": null
+            },
+            {
+                "test": "Búsqueda Binaria - Pruebas Autogeneradas por Tipo -> debe evaluar lista=[1, 2, 3] objetivo=2",
+                "status": "PASS",
+                "error": null
+            },
+            {
+                "test": "Búsqueda Binaria - Pruebas Autogeneradas por Tipo -> debe evaluar lista=no_es_lista objetivo=2",
+                "status": "PASS",
+                "error": null
+            },
+            {
+                "test": "Búsqueda Binaria - Pruebas Autogeneradas por Tipo -> debe evaluar lista=[1, 2, 3] objetivo=no_es_entero",
+                "status": "PASS",
+                "error": null
+            },
+            {
+                "test": "Búsqueda Binaria - Pruebas Autogeneradas por Tipo -> debe evaluar lista=[3, 2, 1] objetivo=2",
+                "status": "PASS",
+                "error": null
+            }
+        ]
+    },
+    "metricas": {
+        "complejidad_ciclomatica": 8,
+        "tiempo_ejecucion_ms": 0.46100000326987356,
+        "flaky_test_detectado": false,
+        "cobertura_porcentaje": 100.0,
+        "relacion_cobertura_defectos": 100.0
+    },
+    "mutacion": {
+        "total_mutantes": 6,
+        "mutantes_eliminados": 5,
+        "mutation_score": 83.33333333333334,
+        "detalles": [
+            {
+                "id": 1,
+                "descripcion": "Mutacion de bucle: <= por <",
+                "resultado": "ELIMINADO (Pruebas fallaron como se esperaba)"
+            },
+            {
+                "id": 2,
+                "descripcion": "Mutacion de comparacion: < por <=",
+                "resultado": "SOBREVIVIO (Las pruebas no detectaron el cambio)"
+            },
+            {
+                "id": 3,
+                "descripcion": "Mutacion de desplazamiento izquierda: +1 por -1",
+                "resultado": "ELIMINADO (Pruebas fallaron como se esperaba)"
+            },
+            {
+                "id": 4,
+                "descripcion": "Mutacion de desplazamiento derecha: -1 por +1",
+                "resultado": "ELIMINADO (Pruebas fallaron como se esperaba)"
+            },
+            {
+                "id": 5,
+                "descripcion": "Mutacion de punto medio: // 2 por // 3",
+                "resultado": "ELIMINADO (Pruebas fallaron como se esperaba)"
+            },
+            {
+                "id": 6,
+                "descripcion": "Mutacion de retorno: -1 por 0",
+                "resultado": "ELIMINADO (Pruebas fallaron como se esperaba)"
+            }
+        ]
+    },
+    "prediccion": {
+        "coeficientes": {
+            "intercept": 0.5604506382769682,
+            "w_complejidad": 0.0005778851015663603,
+            "w_ejecuciones": 2.3357106174710866e-05,
+            "w_cobertura": -0.591546318984435
+        },
+        "r2": 0.9875041507083971,
+        "confiabilidad_calculada": 1.0,
+        "tasa_defectos_predicha": 0.0
+    }
+}

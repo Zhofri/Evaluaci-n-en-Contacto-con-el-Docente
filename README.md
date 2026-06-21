@@ -1,77 +1,58 @@
-# Pruebas de Software: Diseño de Experimentos y Cobertura de Código
+# Ecosistema de Testing Avanzado y Modelado de Confiabilidad
 
-Este repositorio contiene la resolución práctica para la **Actividad Autónoma 2** del módulo de Control de Calidad y Mantenimiento de Software.
+Este repositorio contiene el desarrollo del proyecto final de la asignatura, el cual integra un mini-framework de pruebas unitarias híbrido, una batería de pruebas avanzadas aplicadas al algoritmo de búsqueda binaria, análisis estático de complejidad, y un modelo de regresión lineal para la predicción de confiabilidad de software.
 
-Aquí se implementan técnicas de **Diseño de Experimentos (DOE)** mediante combinaciones por pares (Pairwise Testing), **Análisis de Cobertura de Código (Branch Coverage)**, y **Análisis Estático de Código** (detección de anomalías de flujo de datos).
+## Estructura del Proyecto
+
+*   `run_all.py`: Script de integración que ejecuta la suite completa de pruebas unitarias, analiza métricas, efectúa pruebas de mutación, calibra el modelo predictivo de confiabilidad y exporta las métricas consolidadas en formato JSON.
+*   `algoritmo/`:
+    *   `busqueda_binaria.py`: Implementación iterativa del algoritmo de búsqueda binaria con aserciones de tipo y contratos de precondición/postcondición.
+*   `framework/`:
+    *   `hybrid_framework.py`: Biblioteca de testing con sintaxis BDD (tipo Jasmine), motor de espías (mocking) y autogenerador de casos de prueba basado en firmas de tipos.
+    *   `metrics.py`: Analizador estático de complejidad ciclomática mediante AST, detector de pruebas inestables (flaky tests) y perfilador de tiempos.
+    *   `mutation.py`: Motor interno que aplica mutaciones en el AST de búsqueda binaria para calcular el Mutation Score.
+*   `tests/`:
+    *   `test_advanced.py`: Suite avanzada que integra pruebas basadas en contratos y property-based testing.
+*   `prediction/`:
+    *   `reliability_model.py`: Ajuste matemático de regresión lineal por mínimos cuadrados ordinarios (MCO) que estima la confiabilidad basándose en complejidad ciclomática, patrones de uso y cobertura.
+*   `dashboard/`:
+    *   `index.html`: Dashboard web interactivo diseñado con estética moderna (Glassmorphic Dark Mode) para la visualización de resultados y curvas predictivas.
+    *   `style.css`: Estilización responsiva y animaciones del dashboard.
+    *   `data.json`: Archivo de datos generado dinámicamente que alimenta el dashboard.
+*   `informe/`:
+    *   `generate_docx.py`: Generador dinámico del informe técnico formal de 12 páginas.
+    *   `informe_final.docx`: Informe de salida oficial formateado bajo normas APA 7 y estructurado con tablas financieras y referencias bibliográficas académicas reales.
 
 ---
 
-## 📋 Contenido del Repositorio
+## Requisitos de Instalación
 
-1.  **`busqueda_binaria.py`**: Algoritmo de búsqueda binaria desarrollado en la Tarea 1.
-2.  **`test_busqueda_binaria.py`**: Suite de pruebas final que alcanza el **100% de cobertura de decisiones/ramas**.
-3.  **`test_inicial.py`**: Suite de pruebas reducida inicial (cobertura del 89%).
-4.  **`generar_pairwise.py`**: Script en Python utilizando la librería `allpairspy` para generar combinaciones DOE de 5 factores mediante Pairwise.
-5.  **`casos_prueba_pairwise.csv`**: Tabla exportada con las 30 combinaciones óptimas de pruebas para el sistema de reserva de hotel.
-6.  **`busqueda_binaria_anomalo.py`**: Algoritmo modificado con dos anomalías de flujo de datos introducidas intencionadamente (variable no utilizada y variable indefinida/no inicializada).
-7.  **`reporte_analisis_estatico.txt`**: Resultados y diagnóstico generado por la herramienta de análisis estático `pylint`.
-8.  **`ENTREGABLE_AUTONOMO2.md`**: Informe técnico completo detallando la teoría, diseño de experimentos, análisis y conclusiones del trabajo.
-
----
-
-## 🛠️ Requisitos e Instalación
-
-Para ejecutar los scripts y generar los reportes de cobertura en tu máquina local, necesitas tener instalado **Python 3.8+** y las siguientes dependencias:
+El proyecto se ejecuta sobre **Python 3.x** y utiliza las dependencias básicas detalladas a continuación:
 
 ```bash
-pip install allpairspy coverage pylint
+pip install numpy python-docx
 ```
 
 ---
 
-## 🚀 Cómo Ejecutar el Proyecto
+## Guía de Ejecución
 
-### 1. Generación de Casos de Prueba (Pairwise / DOE)
-Para generar las combinaciones óptimas por pares para el sistema de reserva de habitaciones de hotel:
+### 1. Ejecución Completa de la Suite y Generación de Datos
+Para ejecutar el framework, correr las pruebas avanzadas y calibrar el modelo predictivo de confiabilidad, ejecute:
+
 ```bash
-python generar_pairwise.py
+python run_all.py
 ```
-*Esto generará automáticamente los archivos `casos_prueba_pairwise.csv` y `casos_prueba_pairwise.md`.*
 
----
+Al concluir, el script reportará los indicadores principales en la terminal y guardará los detalles en `dashboard/data.json`.
 
-### 2. Análisis de Cobertura de Código
+### 2. Visualización del Dashboard Interactivo
+Una vez ejecutado el paso anterior, abra el archivo `dashboard/index.html` en cualquier navegador web moderno (Chrome, Firefox, Edge, etc.) para interactuar con las visualizaciones y gráficos de regresión lineal.
 
-#### Cobertura del primer conjunto de pruebas (Prueba Inicial):
+### 3. Generación del Informe en Word
+Si desea recompilar el informe final en formato Word (`.docx`), ejecute el siguiente comando:
+
 ```bash
-coverage run --branch -m unittest test_inicial.py
-coverage report -m
+python informe/generate_docx.py
 ```
-*Se observará una cobertura de decisiones del **89%**.*
-
-#### Cobertura del segundo conjunto de pruebas (Prueba Completa):
-```bash
-coverage run --branch -m unittest test_busqueda_binaria.py
-coverage report -m
-```
-*Se alcanzará una cobertura de decisiones del **100%**.*
-
-#### Generar Reporte Visual en HTML:
-```bash
-coverage html
-```
-*Abre el archivo `htmlcov/index.html` en tu navegador para visualizar la cobertura de cada línea del código de forma gráfica.*
-
----
-
-### 3. Análisis Estático de Código
-Para comprobar cómo la herramienta de análisis estático detecta las anomalías de flujo de datos en el archivo modificado:
-```bash
-pylint busqueda_binaria_anomalo.py
-```
-*El resultado de este diagnóstico se encuentra guardado en `reporte_analisis_estatico.txt`.*
-
----
-
-## 🧑‍💻 Autores
-*   Desarrollado para la Actividad Autónoma 2.
+El documento generado cumplirá estrictamente con la rúbrica técnica de 10-12 páginas con referencias en formato APA 7.
